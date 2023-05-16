@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Work from Home Difference</title>
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+        <style>
+            body { margin:0; padding:0; }
+            #map { position:absolute; top:0; bottom:0; width:100%; }
+        </style>
+    </head>
+
+    <body>
+        <style>
+            .map-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #fff;
+            margin-right: 20px;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+            }
+
+            .legend {
+            background-color: #fff;
+            border-radius: 3px;
+            bottom: 30px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            padding: 10px;
+            position: absolute;
+            right: 10px;
+            z-index: 1;
+            }
+             
+            .legend h4 {
+            margin: 0 0 10px;
+            }
+             
+            .legend div span {
+            border-radius: 50%;
+            display: inline-block;
+            height: 10px;
+            margin-right: 5px;
+            width: 10px;
+            }
+        </style>
+
+
+        <div id="map"></div>
+
+        <div class='map-overlay' id='features'><h2>WFH percentage</h2>
+            <div  id="info"><p>ini akan muncul text gitulah pokoknya</p></div>
+        </div>
+
+
+        <div id="wards-legend" class="legend">
+            <h4>Work From Home in Wards Level</h4>
+            <div>
+                <span style="background-color: #feedde"></span>
+                <4%
+            </div>
+            <div>
+                <span style="background-color: #fdd0a2"></span>
+                4-14%
+            </div>
+            <div>
+                <span style="background-color: #fdae6b"></span>
+                14-21%
+            </div>
+            <div>
+                <span style="background-color: #fd8d3c"></span>
+                21-28%
+            </div>
+            <div>
+                <span style="background-color: #e6550d"></span>
+                28-35%
+            </div>
+            <div>
+                <span style="background-color: #a63603"></span>
+                >35%
+            </div>
+        </div>
+
+        <div id="borough-legend" class="legend">
+            <h4>Work From Home in Borough Level</h4>
+            <div>
+                <span style="background-color: #feedde"></span>
+                <9%
+            </div>
+            <div>
+                <span style="background-color: #fdd0a2"></span>
+                9-16%
+            </div>
+            <div>
+                <span style="background-color: #fdae6b"></span>
+                16-23%
+            </div>
+            <div>
+                <span style="background-color: #fd8d3c"></span>
+                23-30%
+            </div>
+            <div>
+                <span style="background-color: #e6550d"></span>
+                30-34%
+            </div>
+            <div>
+                <span style="background-color: #a63603"></span>
+                >34%
+            </div>
+        </div>
+
+        
+
+        <script>
+
+            mapboxgl.accessToken = 'pk.eyJ1IjoiaGlsbWFucHIyMSIsImEiOiJjbGQxbGhycTAwZG01M3BxcWV5ejB2ZGtzIn0.wnQW51k0xp5SEd1ggujsiA' // here is personal accessToken
+
+            const map = new mapboxgl.Map({
+                container: 'map', //container id
+                style: 'mapbox://styles/hilmanpr21/clhhnp8i201ec01pnduwwfwzq',
+                center: [-0.12, 51.51],
+                zoom: 9,
+                minZoom: 9
+
+            })
+
+            //set zoom change
+            const zoomThreshold = 10;
+
+            map.on('load', function(){
+
+                map.addLayer({
+                    id: 'wfh_diff_borough',
+                    type: 'fill',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://hilmanpr21.6jj7met7'
+                    }, 
+                    'source-layer': 'workfromhome_borough-a2x5eh',
+                    'maxzoom': zoomThreshold,
+                    'paint': {
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'wfh_diff'],
+                            9,
+                            '#feedde',
+                            16,
+                            '#fdd0a2',
+                            23,
+                            '#fdae6b',
+                            30,
+                            '#fd8d3c',
+                            34,
+                            '#e6550d',
+                            41,
+                            '#a63603'
+                        ],
+                       'fill-opacity': 0.7, 
+                    }
+                });
+
+                map.addLayer({
+                    id: 'wfh_diff_wards',
+                    type: 'fill',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://hilmanpr21.9x6dxipj'
+                    }, 
+                    'source-layer': 'workfromhome_wards-9gb5xb',
+                    'minzoom': zoomThreshold,
+                    'paint': {
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'wfh_diff'],
+                            4,
+                            '#feedde',
+                            14,
+                            '#fdd0a2',
+                            20,
+                            '#fdae6b',
+                            28,
+                            '#fd8d3c',
+                            35,
+                            '#e6550d',
+                            51,
+                            '#a63603'
+                        ],
+                       'fill-opacity': 0.7
+                    }
+                });
+
+                const boroughLegend =
+                    document.getElementById("borough-legend");
+                const wardsLegend =
+                    document.getElementById("wards-legend");
+                map.on('zoom', () => {
+                    if (map.getZoom() < zoomThreshold){
+                        boroughLegend.style.display = 'block';
+                        wardsLegend.style.display = 'none';
+                        
+                        // change info on hover
+                        map.on('mousemove', (event) => {
+                            const borough = map.queryRenderedFeatures(event.point, 
+                            {
+                                layers: ['wfh_diff_borough']
+                            });
+                            document.getElementById('info').innerHTML= 
+                                borough.length
+                                ?`<h3>${borough[0].properties.local_authority_name}</h3>
+                                    <p><strong>
+                                    <em>${borough[0].properties.wfh_diff}</strong> XXXX</em>
+                                    </p>`
+                                : `<p>ini akan muncul text gitulah pokoknya</p>`;
+                        });
+                    }
+                    else {
+                        boroughLegend.style.display = 'none';
+                        wardsLegend.style.display = 'block';
+                        
+                        // change info on hover
+                        map.on('mousemove', (event) => {
+                            const wards = map.queryRenderedFeatures(event.point, 
+                            {
+                                layers: ['wfh_diff_wards']
+                            });
+                            document.getElementById('info').innerHTML= 
+                                wards.length
+                                ?`<h3>${wards[0].properties.ward_name}</h3>
+                                    <p><strong>
+                                    <em>${wards[0].properties.wfh_diff}</strong> XXXX</em>
+                                    </p>`
+                                : `<p>ini akan muncul text gitulah pokoknya</p>`;
+                        });
+                    }
+                });
+
+                // Change the cursor to a pointer when the mouse is over the county layer.
+                map.on('mouseenter', 'wfh_diff_borough', function () {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                // Change it back to a pointer when it leaves and remove the popup window.
+                map.on('mouseleave', 'wfh_diff_borough', function () {
+                    map.getCanvas().style.cursor = '';
+                    mypopup.remove();
+                });
+
+                // Change the cursor to a pointer when the mouse is over the county layer.
+                map.on('mouseenter', 'wfh_diff_wards', function () {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                // Change it back to a pointer when it leaves and remove the popup window.
+                map.on('mouseleave', 'wfh_diff_wards', function () {
+                    map.getCanvas().style.cursor = '';
+                    mypopup.remove();
+                });
+
+                // change info on hover
+                map.on('mousemove', (event) => {
+                            const borough = map.queryRenderedFeatures(event.point, 
+                            {
+                                layers: ['wfh_diff_borough']
+                            });
+                            document.getElementById('info').innerHTML= 
+                                borough.length
+                                ?`<h3>${borough[0].properties.local_authority_name}</h3>
+                                    <p><strong>
+                                    <em>${borough[0].properties.wfh_diff}</strong> XXXX</em>
+                                    </p>`
+                                : `<p>ini akan muncul text gitulah pokoknya</p>`;
+                        });
+                
+
+
+
+            });
+
+        </script>
+    </body>
+
+</html>
