@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>number of jobs in london</title>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://unpkg.com/d3-simple-slider"></script>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #map-container {
+      position: relative;
+      height: 100%;
+      width: 100%;
+
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+
+    #slider-container {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    #line-graph-container{
+    background: rgba(255, 255, 255, 0);
+    position: absolute;
+    top: 30px;
+    right: 60px;
+    z-index: 1;
+    width: 1400px;
+    height: 1000px;
+    overflow: auto;
+}
+
+    #legend {
+      background: rgba(255, 255, 255, 0.3);
+      padding: 10px;
+      border-radius: 3px;
+      position: absolute;
+      bottom: 50px;
+      right: 60px;
+      z-index: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+    .map-button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  margin-right: 5px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+    #map-title {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1;
+  font-weight: bold;
+      font-size: 20px;
+}
+
+
+.map-button:hover {
+  background-color: grey;
+}
+
+  </style>
+</head>
+
+<body>
+  <div id="line-graph-container">
+    <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/13764676"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+
+    </div>
+    <button id="show-map-button" class="map-button">Show Map</button>
+  </div>
+
+  <div id="map-container" class="hidden">
+    <div id="map">
+      <div id="map-title">Changes in the number of Jobs by area in London Boroughs (2011-2021)</div>
+      <div id="slider-container">
+        <span id="year"></span>
+        <div id="slider"></div>
+      </div>
+      <div id="legend"></div>
+    </div>
+    <button id="show-line-graph-button" class="map-button">Show Line Graph</button>
+
+  </div>
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiamlhYm8wODI4IiwiYSI6ImNsaGpwbjA4czBkdmozcm94aXFjeXQ2N3UifQ.sZ5JYiPbjPnj0L-TcJhEfA';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [-0.12765, 51.5073359],
+      zoom: 9
+    });
+
+    var years = d3.range(2011, 2022);
+
+    var slider = d3.sliderBottom()
+  .min(d3.min(years))
+  .max(d3.max(years))
+  .step(1)
+  .width(500)
+  .tickFormat(d3.format(''))
+  .ticks(10)
+  .default(2011)
+  .on('end', val => {
+  d3.select('p#value-step').text(d3.format('')(val));
+  d3.select('span#year').text(`Year: ${val}`);
+  updateMap(val);
+});
+
+
+
+    var gTime = d3.select('div#slider')
+      .append('svg')
+      .attr('width', 600)
+      .attr('height', 100)
+      .append('g')
+      .attr('transform', 'translate(30,30)');
+
+    gTime.call(slider);
+    d3.select('p#value-step').text(d3.format('')(slider.value()));
+
+    // Legend
+    var legendData = {
+      "< 936Jobs/km2": "#feedde",
+      "936 - 2030Jobs/km2": "#fdd0a2",
+      "2030 - 2766Jobs/km2": "#fdae6b",
+      "2766 - 4466Jobs/km2": "#fd8d3c",
+      "4466 - 9025Jobs/km2": "#e6505d",
+      "9025 - 14805Jobs/km2": "#FF0000",
+      ">= 14805Jobs/km2": "#a63603"
+    };
+
+    var legend = document.getElementById('legend');
+    for (var key in legendData) {
+      var color = legendData[key];
+      var item = document.createElement('div');
+      var keyDiv = document.createElement('div');
+      var colorDiv = document.createElement('div');
+
+      keyDiv.innerHTML = key;
+      colorDiv.style.backgroundColor = color;
+      colorDiv.style.width = '10px';
+      colorDiv.style.height = '10px';
+      colorDiv.style.display = 'inline-block';
+      colorDiv.style.marginRight = '5px';
+
+      item.appendChild(colorDiv);
+      item.appendChild(keyDiv);
+      legend.appendChild(item);
+    }
+
+    var geojsonData;
+    fetch('Joined_Data1.geojson')
+      .then(response => response.json())
+      .then(data => {
+        geojsonData = data;
+        updateMap(slider.value());
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+    function updateMap(year) {
+  var yearData = {
+    ...geojsonData,
+    features: geojsonData.features.filter(feature => feature.properties.year === year)
+  };
+
+  if (map.getLayer('jobs-fill')) {
+    map.removeLayer('jobs-fill');
+    map.removeSource('jobs');
+  }
+
+  map.addSource('jobs', {
+    'type': 'geojson',
+    'data': yearData
+  });
+
+  map.addLayer({
+    'id': 'jobs-fill',
+    'type': 'fill',
+    'source': 'jobs',
+    'paint': {
+      'fill-color': [
+        'interpolate',
+        ['linear'],
+        ['get', 'Jobs by area'],
+            935.25, '#feedde',
+            2029.05, '#fdd0a2',
+            2765.22, '#fdae6b',
+            4465.85, '#fd8d3c',
+            9024.39, '#e6505d',
+            14804.85, '#FF0000',
+            150000, '#a63603'
+      ],
+      'fill-opacity': 0.8
+    }
+  });
+}
+
+
+            // Add event listeners for the buttons
+    document.getElementById('show-map-button').addEventListener('click', function() {
+      document.getElementById('line-graph-container').classList.add('hidden');
+      document.getElementById('map-container').classList.remove('hidden');
+    });
+
+    document.getElementById('show-line-graph-button').addEventListener('click', function() {
+      document.getElementById('map-container').classList.add('hidden');
+      document.getElementById('line-graph-container').classList.remove('hidden');
+    });
+
+
+
+  </script>
+</body>
+
+</html>
+
