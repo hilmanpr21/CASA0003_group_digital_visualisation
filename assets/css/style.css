@@ -483,6 +483,50 @@ section {
   margin-bottom: 0;
 }
 
+
+/*--------------------------------------------------------------
+# Job
+--------------------------------------------------------------*/
+
+.job .content {
+  margin-top: 60px;
+  margin-left: 20px;
+}
+
+.job .content h3 {
+  font-weight: 400;
+  font-size: 26px;
+}
+
+.job .content p {
+  font-weight: 200;
+  font-size: 13px;
+}
+
+.job .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.job .content ul li {
+  padding-bottom: 10px;
+}
+
+.job .content ul i {
+  font-size: 20px;
+  padding-right: 4px;
+  color: #cc1616;
+}
+
+.job .content p:last-child {
+  margin-bottom: 0;
+}
+
+.job .maps {
+  margin-left: 0px;
+  margin-top: 60px;
+}
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
