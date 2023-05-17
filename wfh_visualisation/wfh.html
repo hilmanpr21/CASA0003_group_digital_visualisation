@@ -5,16 +5,14 @@
         <meta charset="utf-8" />
         <title>Work from Home Difference</title>
         <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <link href="https://fonts.googleapis.com/css?family=Jost:200,200i,300,300i|Varela+Round:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i|Nunito:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
         <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+        <script charset="utf-8" src="https://d3js.org/d3.v4.min.js"></script>
+        <script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
         <style>
             body { margin:0; padding:0; }
             #map { position:absolute; top:0; bottom:0; width:100%; }
-        </style>
-    </head>
-
-    <body>
-        <style>
             .map-overlay {
             position: absolute;
             top: 0;
@@ -50,71 +48,129 @@
             margin-right: 5px;
             width: 10px;
             }
+
+            .map-overlay{
+                width: 300px;
+                padding: 5px 5px 5px 10px;
+                font-family: 'Nunito';
+                font-size: 13px;
+            }
+
+            .map-overlay h1{
+                font-family: "Varela Round";
+                font-weight: 600;
+                font-size: 20px;
+            }
+
+            .map-overlay h2{
+                font-family: "Varela Round";
+                font-weight: 300;
+                font-size: 16px;
+            }
+
+            .map-overlay h3{
+                font-family: "Varela Round";
+                font-weight: 400;
+                font-size: 14px;
+            }
+
+            .map-overlay p{
+                font-family: "Nunito";
+                font-weight: 400;
+                font-size: 13px;
+                margin: 0 0 0 0;
+            }
+
+
+            .map-overlay .map-legend{
+                /*padding-right: 5px;
+                padding-left: 5px;*/
+                margin-top: 20px;
+            }
+            
+            .map-overlay .map-legend p{
+                /*padding-right: 5px;
+                padding-left: 5px;*/
+                padding-top: 0;
+            }
+
+            .map-overlay .info h3{
+                font-family: "Varela Round";
+                font-weight: 400;
+                font-size: 12px;
+                margin: 0 0 0 0;
+            }
+            
+            .map-overlay .info h2{
+                font-family: "Varela Round";
+                font-weight: 500;
+                font-size: 18px;
+                margin: 0 0 0 0;
+            }
+
+
+
         </style>
+    </head>
+
+    <body>
+        
 
 
         <div id="map"></div>
 
-        <div class='map-overlay' id='features'><h2>WFH percentage</h2>
-            <div  id="info"><p>ini akan muncul text gitulah pokoknya</p></div>
-        </div>
-
-
-        <div id="wards-legend" class="legend">
-            <h4>Work From Home in Wards Level</h4>
+        <div class='map-overlay' id='features'>
+            <h1>Work Form Home Percentage Change</h1>
+            <h2>2011 to 2021</h2>
+            <h2>London, UK</h2>
+            <p>Sin</p>
+            <br>
+            <P> </P>
             <div>
-                <span style="background-color: #feedde"></span>
-                <4%
+                <h3>Select To see Different Year!</h3>
+                <div class="radio-btn">
+                    <table>
+                        <tr>
+                            <td>
+                                <input id="2011_button" type="radio" name="layers" value="2011_wfh">
+                                <label for="2011_wfh">Work From Home 2011</label><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="2021_button" type="radio" name="layers" value="2021_wfh">
+                                <label for="2021_wfh">Work From Home 2021</label><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input checked id="diff_button" type="radio" name="layers" value="difd_wfh">
+                                <label for="2021_wfh">Work From Home Difference</label><br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class='map-legend'>
+                <canvas id='map-legend' width='300' height='30' style="background-image: linear-gradient(to right, #feedde, #e6550d); border-color: #a63603; border-width: 3px;"> </canvas>
+                <table>
+                    <tr>
+                        <td>
+                            <p>Min  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Max</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            
+            <div  id="info">
+                <h2>Hover To see the Info!</h2>
             </div>
             <div>
-                <span style="background-color: #fdd0a2"></span>
-                4-14%
-            </div>
-            <div>
-                <span style="background-color: #fdae6b"></span>
-                14-21%
-            </div>
-            <div>
-                <span style="background-color: #fd8d3c"></span>
-                21-28%
-            </div>
-            <div>
-                <span style="background-color: #e6550d"></span>
-                28-35%
-            </div>
-            <div>
-                <span style="background-color: #a63603"></span>
-                >35%
-            </div>
-        </div>
-
-        <div id="borough-legend" class="legend">
-            <h4>Work From Home in Borough Level</h4>
-            <div>
-                <span style="background-color: #feedde"></span>
-                <9%
-            </div>
-            <div>
-                <span style="background-color: #fdd0a2"></span>
-                9-16%
-            </div>
-            <div>
-                <span style="background-color: #fdae6b"></span>
-                16-23%
-            </div>
-            <div>
-                <span style="background-color: #fd8d3c"></span>
-                23-30%
-            </div>
-            <div>
-                <span style="background-color: #e6550d"></span>
-                30-34%
-            </div>
-            <div>
-                <span style="background-color: #a63603"></span>
-                >34%
+                <h3>Scrool to see different level!</h3>
             </div>
         </div>
+
 
         
 
@@ -125,7 +181,7 @@
             const map = new mapboxgl.Map({
                 container: 'map', //container id
                 style: 'mapbox://styles/hilmanpr21/clhhnp8i201ec01pnduwwfwzq',
-                center: [-0.12, 51.51],
+                center: [0.1, 51.51],
                 zoom: 9,
                 minZoom: 9
 
@@ -141,9 +197,9 @@
                     type: 'fill',
                     source: {
                         type: 'vector',
-                        url: 'mapbox://hilmanpr21.6jj7met7'
+                        url: 'mapbox://hilmanpr21.37j606rh'
                     }, 
-                    'source-layer': 'workfromhome_borough-a2x5eh',
+                    'source-layer': 'workfromhome_borough-a62k15',
                     'maxzoom': zoomThreshold,
                     'paint': {
                         'fill-color': [
@@ -198,15 +254,137 @@
                     }
                 });
 
+                map.addLayer({
+                    id: 'wfh_2011_borough',
+                    type: 'fill',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://hilmanpr21.37j606rh'
+                    }, 
+                    'source-layer': 'workfromhome_borough-a62k15',
+                    'maxzoom': zoomThreshold,
+                    'paint': {
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'wfh_2011'],
+                            4,
+                            '#feedde',
+                            5,
+                            '#fdd0a2',
+                            6,
+                            '#fdae6b',
+                            8,
+                            '#fd8d3c',
+                            9,
+                            '#e6550d',
+                            12,
+                            '#a63603'
+                        ],
+                       'fill-opacity': 0, 
+                    }
+                });
+
+                map.addLayer({
+                    id: 'wfh_2011_wards',
+                    type: 'fill',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://hilmanpr21.9x6dxipj'
+                    }, 
+                    'source-layer': 'workfromhome_wards-9gb5xb',
+                    'minzoom': zoomThreshold,
+                    'paint': {
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'wfh_2011'],
+                            2,
+                            '#feedde',
+                            5,
+                            '#fdd0a2',
+                            7,
+                            '#fdae6b',
+                            9,
+                            '#fd8d3c',
+                            12,
+                            '#e6550d',
+                            17,
+                            '#a63603'
+                        ],
+                       'fill-opacity': 0
+                    }
+                });
+
+                map.addLayer({
+                    id: 'wfh_2021_borough',
+                    type: 'fill',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://hilmanpr21.37j606rh'
+                    }, 
+                    'source-layer': 'workfromhome_borough-a62k15',
+                    'maxzoom': zoomThreshold,
+                    'paint': {
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'wfh_2021'],
+                            10,
+                            '#feedde',
+                            22,
+                            '#fdd0a2',
+                            29,
+                            '#fdae6b',
+                            34,
+                            '#fd8d3c',
+                            39,
+                            '#e6550d',
+                            53,
+                            '#a63603'
+                        ],
+                       'fill-opacity': 0, 
+                    }
+                });
+
+                map.addLayer({
+                    id: 'wfh_2021_wards',
+                    type: 'fill',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://hilmanpr21.9x6dxipj'
+                    }, 
+                    'source-layer': 'workfromhome_wards-9gb5xb',
+                    'minzoom': zoomThreshold,
+                    'paint': {
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'wfh_2021'],
+                            8,
+                            '#feedde',
+                            18,
+                            '#fdd0a2',
+                            26,
+                            '#fdae6b',
+                            33,
+                            '#fd8d3c',
+                            42,
+                            '#e6550d',
+                            57,
+                            '#a63603'
+                        ],
+                       'fill-opacity': 0
+                    }
+                });
+
                 const boroughLegend =
                     document.getElementById("borough-legend");
                 const wardsLegend =
                     document.getElementById("wards-legend");
                 map.on('zoom', () => {
                     if (map.getZoom() < zoomThreshold){
-                        boroughLegend.style.display = 'block';
-                        wardsLegend.style.display = 'none';
-                        
+                                              
                         // change info on hover
                         map.on('mousemove', (event) => {
                             const borough = map.queryRenderedFeatures(event.point, 
@@ -215,17 +393,21 @@
                             });
                             document.getElementById('info').innerHTML= 
                                 borough.length
-                                ?`<h3>${borough[0].properties.local_authority_name}</h3>
-                                    <p><strong>
-                                    <em>${borough[0].properties.wfh_diff}</strong> XXXX</em>
+                                ?`<h2>${borough[0].properties.local_authority_name}</h2>
+                                    <p>Work From Home percentage in <b>2011</b>:<br>
+                                    <strong><em>${borough[0].properties.wfh_2011}%</strong></em>
+                                    <br>
+                                    Work From Home percentage in <b>2021</b>:<br>
+                                    <strong><em>${borough[0].properties.wfh_2021}%</strong> </em>
+                                    <br>
+                                    Work From Home percentage <b>increase</b>:<br>
+                                    <strong><em>${borough[0].properties.wfh_diff}%</strong> </em>
                                     </p>`
-                                : `<p>ini akan muncul text gitulah pokoknya</p>`;
+                                : `<h2>Hover To see the Info!</h2>`;
                         });
                     }
                     else {
-                        boroughLegend.style.display = 'none';
-                        wardsLegend.style.display = 'block';
-                        
+                                                
                         // change info on hover
                         map.on('mousemove', (event) => {
                             const wards = map.queryRenderedFeatures(event.point, 
@@ -234,11 +416,18 @@
                             });
                             document.getElementById('info').innerHTML= 
                                 wards.length
-                                ?`<h3>${wards[0].properties.ward_name}</h3>
-                                    <p><strong>
-                                    <em>${wards[0].properties.wfh_diff}</strong> XXXX</em>
+                                ?`<h2>${wards[0].properties.ward_name}</h2>
+                                    <h3>${wards[0].properties.local_authority_name}</h3>
+                                    <p>Work From Home percentage in <b>2011</b>:<br>
+                                    <strong><em>${wards[0].properties.wfh_2011}</strong></em>
+                                    <br>
+                                    Work From Home percentage in <b>2021</b>:<br>
+                                    <strong><em>${wards[0].properties.wfh_2021}</strong></em>
+                                    <br>
+                                    Work From Home percentage <b>increase</b>:<br>
+                                    <strong><em>${wards[0].properties.wfh_diff}</strong></em>
                                     </p>`
-                                : `<p>ini akan muncul text gitulah pokoknya</p>`;
+                                : `<h2>Hover To see the Info!</h2>`;
                         });
                     }
                 });
@@ -251,7 +440,6 @@
                 // Change it back to a pointer when it leaves and remove the popup window.
                 map.on('mouseleave', 'wfh_diff_borough', function () {
                     map.getCanvas().style.cursor = '';
-                    mypopup.remove();
                 });
 
                 // Change the cursor to a pointer when the mouse is over the county layer.
@@ -262,28 +450,64 @@
                 // Change it back to a pointer when it leaves and remove the popup window.
                 map.on('mouseleave', 'wfh_diff_wards', function () {
                     map.getCanvas().style.cursor = '';
-                    mypopup.remove();
                 });
 
                 // change info on hover
                 map.on('mousemove', (event) => {
-                            const borough = map.queryRenderedFeatures(event.point, 
-                            {
-                                layers: ['wfh_diff_borough']
-                            });
-                            document.getElementById('info').innerHTML= 
-                                borough.length
-                                ?`<h3>${borough[0].properties.local_authority_name}</h3>
-                                    <p><strong>
-                                    <em>${borough[0].properties.wfh_diff}</strong> XXXX</em>
-                                    </p>`
-                                : `<p>ini akan muncul text gitulah pokoknya</p>`;
-                        });
+                    const borough = map.queryRenderedFeatures(event.point, 
+                    {
+                        layers: ['wfh_diff_borough']
+                    });
+                    document.getElementById('info').innerHTML= 
+                        borough.length
+                        ?`<h2>${borough[0].properties.local_authority_name}</h2>
+                            <p>Work From Home percentage in <b>2011</b>:<br>
+                            <strong><em>${borough[0].properties.wfh_2011}%</strong></em>
+                            <br>
+                            Work From Home percentage in <b>2021</b>:<br>
+                            <strong><em>${borough[0].properties.wfh_2021}%</strong> </em>
+                            <br>
+                            Work From Home percentage <b>increase</b>:<br>
+                            <strong><em>${borough[0].properties.wfh_diff}%</strong> </em>
+                            </p>`
+                        : `<h2>Hover To see the Info!</h2>`;
+                });
+
+                //Event listener for layer switch
+                document.getElementById("2011_button").addEventListener("click", function(){
+                    map.setPaintProperty('wfh_2011_borough','fill-opacity',0.7);
+                    map.setPaintProperty('wfh_2011_wards','fill-opacity',0.7);
+                    map.setPaintProperty('wfh_2021_borough','fill-opacity',0);
+                    map.setPaintProperty('wfh_2021_wards','fill-opacity',0);
+                    map.setPaintProperty('wfh_diff_borough','fill-opacity',0);
+                    map.setPaintProperty('wfh_diff_wards','fill-opacity',0);
+                });
+
+                document.getElementById("2021_button").addEventListener("click", function(){
+                    map.setPaintProperty('wfh_2011_borough','fill-opacity',0);
+                    map.setPaintProperty('wfh_2011_wards','fill-opacity',0);
+                    map.setPaintProperty('wfh_2021_borough','fill-opacity',0.7);
+                    map.setPaintProperty('wfh_2021_wards','fill-opacity',0.7);
+                    map.setPaintProperty('wfh_diff_borough','fill-opacity',0);
+                    map.setPaintProperty('wfh_diff_wards','fill-opacity',0);
+                });
+
+                document.getElementById("diff_button").addEventListener("click", function(){
+                    map.setPaintProperty('wfh_2011_borough','fill-opacity',0);
+                    map.setPaintProperty('wfh_2011_wards','fill-opacity',0);
+                    map.setPaintProperty('wfh_2021_borough','fill-opacity',0);
+                    map.setPaintProperty('wfh_2021_wards','fill-opacity',0);
+                    map.setPaintProperty('wfh_diff_borough','fill-opacity',0.7);
+                    map.setPaintProperty('wfh_diff_wards','fill-opacity',0.7);
+                });
+
+
+
                 
-
-
-
+                
             });
+
+            
 
         </script>
     </body>
