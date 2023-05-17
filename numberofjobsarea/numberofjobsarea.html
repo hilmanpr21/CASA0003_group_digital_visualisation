@@ -26,7 +26,10 @@
 
     
     #map {
-      height: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
       width: 100%;
     }
 
@@ -70,7 +73,7 @@
   color: white;
   border: none;
   margin-right: 5px;
-  padding: 10px;
+  padding: 4px;
   cursor: pointer;
   z-index: 1;
 }
@@ -97,7 +100,7 @@
     <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/13764676"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
 
     </div>
-    <button id="show-map-button" class="map-button">Show Map</button>
+    <button id="show-map-button" class="map-button">Show</button>
   </div>
 
   <div id="map-container" class="hidden">
@@ -235,10 +238,13 @@
 
 
             // Add event listeners for the buttons
-    document.getElementById('show-map-button').addEventListener('click', function() {
-      document.getElementById('line-graph-container').classList.add('hidden');
-      document.getElementById('map-container').classList.remove('hidden');
-    });
+            document.getElementById('show-map-button').addEventListener('click', function() {
+  document.getElementById('line-graph-container').classList.add('hidden');
+  document.getElementById('map-container').classList.remove('hidden');
+  // Force the map to resize
+  map.resize();
+});
+
 
     document.getElementById('show-line-graph-button').addEventListener('click', function() {
       document.getElementById('map-container').classList.add('hidden');
