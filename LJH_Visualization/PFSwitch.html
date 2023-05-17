@@ -19,31 +19,6 @@
     </style>
 </head>
 <body>
-    <button id="switchButton">Switch</button>
-
-    <div id="chartContainer" class="flourish-embed flourish-chart" data-src="visualisation/13785636"></div>
-    <div id="raceContainer" class="flourish-embed flourish-bar-chart-race" data-src="visualisation/13786046"></div>
-
-    <script src="https://public.flourish.studio/resources/embed.js"></script>
-    <script>
-        var switchButton = document.getElementById("switchButton");
-        var chartContainer = document.getElementById("chartContainer");
-        var raceContainer = document.getElementById("raceContainer");
-        var currentChart = 1;
-
-        switchButton.addEventListener("click", function () {
-            if (currentChart === 1) {
-                currentChart = 2;
-                chartContainer.style.display = "none";
-                raceContainer.style.display = "block";
-                flourish.embed.resize();
-            } else {
-                currentChart = 1;
-                raceContainer.style.display = "none";
-                chartContainer.style.display = "block";
-                flourish.embed.resize();
-            }
-        });
-    </script>
+    <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/13751197"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
 </body>
 </html>
