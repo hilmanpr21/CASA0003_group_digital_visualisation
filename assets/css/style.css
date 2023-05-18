@@ -533,6 +533,33 @@ section {
   margin-top: 60px;
 }
 
+#job .btn-get-started {
+  font-family: "Varela Round", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  opacity: 0.75;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 30px;
+  transition: 0.5s;
+  border: 2px solid #FD8D3C;
+  background: #FD8D3C;
+  color: #fff;
+}
+
+#job .btn-get-started:hover {
+  background: #AD343E;
+  border-color: #AD343E;
+  color: #fff;
+  opacity: 1;
+}
+
+#job .button {
+  text-align: center;
+}
+
+
 /*--------------------------------------------------------------
 # Full Time Part Time
 --------------------------------------------------------------*/
@@ -560,6 +587,12 @@ section {
   font-weight: 200;
   font-size: 14px;
   text-align: right;
+}
+
+.fullpart p {
+  font-weight: 200;
+  font-size: 14px;
+  text-align: justify;
 }
 
 .fullpart .content2 p {
@@ -604,16 +637,22 @@ section {
   display: inline-block;
   padding: 10px 30px;
   transition: 0.5s;
-  border: 2px solid #fff;
+  border: 2px solid #FD8D3C;
+  background: #FD8D3C;
   color: #fff;
 }
 
 #fullpart .btn-get-started:hover {
-  background: #FD8D3C;
-  border-color: #FD8D3C;
+  background: #AD343E;
+  border-color: #AD343E;
   color: #fff;
   opacity: 1;
 }
+
+#fullpart .button {
+  text-align: center;
+}
+
 
 /*--------------------------------------------------------------
 # General
@@ -734,6 +773,32 @@ section {
   padding-right: 0px;
   background-color: #fff;
   margin-bottom: 0px;
+  text-align: center;
+}
+
+#wfh .btn-get-started {
+  font-family: "Varela Round", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  opacity: 0.75;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 30px;
+  transition: 0.5s;
+  border: 2px solid #FD8D3C;
+  background: #FD8D3C;
+  color: #fff;
+}
+
+#wfh .btn-get-started:hover {
+  background: #AD343E;
+  border-color: #AD343E;
+  color: #fff;
+  opacity: 1;
+}
+
+#wfh .button {
   text-align: center;
 }
 
