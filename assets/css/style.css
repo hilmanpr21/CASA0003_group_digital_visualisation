@@ -651,9 +651,9 @@ section {
 # Cta
 --------------------------------------------------------------*/
 .cta {
-  background: linear-gradient(rgba(2, 2, 2, 0.5), rgba(0, 0, 0, 0.5)), url("../img/cta-bg.jpg") fixed center center;
+  background: linear-gradient(rgba(2, 2, 2, 0.5), rgba(0, 0, 0, 0.5)), url("../img/covid-bg2.jpg") fixed center center;
   background-size: cover;
-  padding: 120px 0;
+  padding: 50px 0;
 }
 
 .cta h3 {
@@ -689,19 +689,26 @@ section {
 # wfh
 --------------------------------------------------------------*/
 .wfh{
-  /*height: 500px;*/
   padding: 0 0 0 0;
   margin-bottom: 50px;
+  margin-top: 80px;
+}
+
+.wfh .section-title{
+  padding-bottom: 0;
 }
 
 .wfh .content {
-  padding-right: 30px;
-  background-color: #FD8D3C;
+  padding-right: 0px;
+  background-color: #fff;
+  margin-bottom: 0px;
 }
 
 .wfh .content h3 {
   font-weight: 600;
   font-size: 26px;
+  text-align: center;
+  padding-top: 30px;
 }
 
 .wfh .content ul {
@@ -723,12 +730,19 @@ section {
   margin-bottom: 0;
 }
 
+.wfh .content2 {
+  padding-right: 0px;
+  background-color: #fff;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
 /*--------------------------------------------------------------
 # recap
 --------------------------------------------------------------*/
 .recap {
   background: #fff;
-  padding: 60px 0;
+  padding: 0px 0;
 }
 
 .recap .member {
@@ -879,7 +893,7 @@ section {
 .tools{
   /*height: 500px;*/
   padding: 0 0 0 0;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 }
 
 .tools .content h3 {
@@ -906,7 +920,31 @@ section {
   margin-bottom: 0;
 }
 
+#tools .btn-get-started {
+  font-family: "Varela Round", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  opacity: 0.75;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 30px;
+  transition: 0.5s;
+  border: 2px solid #FD8D3C;
+  background: #FD8D3C;
+  color: #fff;
+}
 
+#tools .btn-get-started:hover {
+  background: #AD343E;
+  border-color: #AD343E;
+  color: #fff;
+  opacity: 1;
+}
+
+#tools .button {
+  text-align: center;
+}
 
 
 /*--------------------------------------------------------------
