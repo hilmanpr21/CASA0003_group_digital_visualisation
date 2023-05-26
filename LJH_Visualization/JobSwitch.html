@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>The Page Title Goes Here</title>
+    <style>
+        #switchButton {
+            position: fixed;
+            left: 10px;
+            bottom: 10px;
+            padding: 10px;
+            background-color: #ccc;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="switchButton">Switch</button>
+
+    <div id="chartContainer" class="flourish-embed flourish-chart" data-src="visualisation/13851753"></div>
+    <div id="raceContainer" class="flourish-embed flourish-bar-chart-race" data-src="visualisation/13850733" style="display: none;"></div>
+
+    <script src="https://public.flourish.studio/resources/embed.js"></script>
+    <script>
+        var switchButton = document.getElementById("switchButton");
+        var chartContainer = document.getElementById("chartContainer");
+        var raceContainer = document.getElementById("raceContainer");
+
+        switchButton.addEventListener("click", function () {
+            if (chartContainer.style.display !== "none") {
+                chartContainer.style.display = "none";
+                raceContainer.style.display = "block";
+                flourish.embed.resize();
+            } else {
+                chartContainer.style.display = "block";
+                raceContainer.style.display = "none";
+                flourish.embed.resize();
+               
+            }
+        });
+    </script>
+</body>
+</html>
